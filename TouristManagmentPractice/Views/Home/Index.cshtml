@@ -1,0 +1,464 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tourist Management - Explore, Manage, Enjoy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg:#0f1724;
+            --card:#0b1220;
+            --accent:#ff6b6b;
+            --muted:#94a3b8;
+            --glass: rgba(255,255,255,0.04);
+            --glass-2: rgba(255,255,255,0.02);
+            --max-width:1200px;
+            --radius:12px;
+        }
+
+        html,body{
+            height:100%;
+            margin:0;
+            font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color:#e6eef8;
+            background: linear-gradient(180deg,#071028 0%, #071426 60%);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        .container{
+            max-width:var(--max-width);
+            margin:0 auto;
+            padding:0 24px;
+        }
+
+        header{
+            position:fixed;
+            top:16px;
+            left:0;
+            right:0;
+            z-index:50;
+            display:flex;
+            justify-content:center;
+            pointer-events:none;
+        }
+
+        .navbar{
+            width:100%;
+            max-width:var(--max-width);
+            background:transparent;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:12px 18px;
+            border-radius:14px;
+            pointer-events:auto;
+            backdrop-filter: blur(6px) saturate(120%);
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-weight:700;
+            color:#fff;
+            text-decoration:none;
+        }
+
+        .logo {
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            background:linear-gradient(135deg,var(--accent),#ffb86b);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            box-shadow:0 6px 18px rgba(255,107,107,0.12), inset 0 -6px 18px rgba(255,255,255,0.04);
+            font-weight:700;
+            color:#081027;
+        }
+
+        nav{
+            display:flex;
+            gap:18px;
+            align-items:center;
+        }
+
+        nav a{
+            color:var(--muted);
+            text-decoration:none;
+            font-weight:600;
+            padding:8px 12px;
+            border-radius:8px;
+        }
+        nav a:hover{ color:#fff; background:var(--glass); }
+
+        .cta-btn{
+            background:linear-gradient(90deg,var(--accent),#ffb86b);
+            padding:10px 14px;
+            border-radius:10px;
+            color:#071027;
+            font-weight:700;
+            text-decoration:none;
+            box-shadow: 0 8px 30px rgba(255,107,107,0.12);
+        }
+
+        /* Mobile */
+        .mobile-toggle{
+            display:none;
+            background:var(--glass);
+            border:1px solid rgba(255,255,255,0.03);
+            padding:8px;
+            border-radius:8px;
+        }
+
+        /* Hero */
+        .hero{
+            min-height:78vh;
+            display:flex;
+            align-items:center;
+            margin-top:28px;
+            position:relative;
+            overflow:hidden;
+            border-radius:18px;
+            margin-bottom:32px;
+        }
+
+        .hero::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background-image:
+                linear-gradient(135deg, rgba(7,18,36,0.36), rgba(5,10,20,0.6)),
+                url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=4a8f3841e9be58bcb20c9a0298c0dcb9');
+            background-size:cover;
+            background-position:center;
+            filter:contrast(1.02) saturate(1.05) brightness(0.86);
+            z-index:0;
+        }
+
+        .hero-content{
+            position:relative;
+            z-index:2;
+            padding:64px;
+            display:flex;
+            gap:40px;
+            align-items:center;
+            width:100%;
+        }
+
+        .hero-text{
+            max-width:640px;
+            padding:28px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:14px;
+            box-shadow: 0 8px 40px rgba(2,6,23,0.6);
+        }
+
+        .hero h1{
+            margin:0 0 12px 0;
+            font-size:40px;
+            line-height:1.05;
+            color:#ffffff;
+        }
+
+        .hero p{
+            margin:0 0 18px 0;
+            color:var(--muted);
+            font-size:16px;
+        }
+
+        .hero-actions{ display:flex; gap:12px; align-items:center; }
+
+        .secondary-btn{
+            background:transparent;
+            border:1px solid rgba(255,255,255,0.06);
+            color:#fff;
+            padding:10px 12px;
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+        /* Features */
+        .features{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:18px;
+            margin:28px 0 48px 0;
+        }
+
+        .card{
+            background:linear-gradient(180deg,var(--glass), var(--glass-2));
+            border-radius:12px;
+            padding:18px;
+            backdrop-filter: blur(8px);
+            border:1px solid rgba(255,255,255,0.03);
+            box-shadow: 0 6px 26px rgba(2,6,23,0.6);
+        }
+
+        .card h3{ margin:0 0 8px 0; font-size:18px; }
+        .card p{ margin:0; color:var(--muted); font-size:14px; }
+
+        .features .icon{
+            width:48px;
+            height:48px;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:12px;
+            background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        }
+
+        /* Gallery */
+        .gallery{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:12px;
+            margin-bottom:36px;
+        }
+        .gallery img{
+            width:100%;
+            height:220px;
+            object-fit:cover;
+            border-radius:10px;
+            display:block;
+            box-shadow:0 12px 30px rgba(2,6,23,0.6);
+        }
+
+        /* Testimonials */
+        .testimonials{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:18px;
+            margin-bottom:36px;
+        }
+        .testimonial{
+            padding:18px;
+            border-radius:12px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border:1px solid rgba(255,255,255,0.03);
+        }
+        .testimonial p{ color:var(--muted); margin:0 0 10px 0; }
+        .testimonial .author{ font-weight:700; color:#fff; font-size:14px; }
+
+        /* CTA strip */
+        .cta-strip{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:18px;
+            border-radius:12px;
+            background:linear-gradient(90deg, rgba(255,107,107,0.08), rgba(255,184,107,0.04));
+            margin-bottom:36px;
+            border:1px solid rgba(255,255,255,0.02);
+        }
+
+        footer{
+            color:var(--muted);
+            padding:36px 0 80px 0;
+            font-size:14px;
+        }
+
+            .hero h1{ font-size:34px; }
+        }
+
+       
+            .hero-text{ padding:18px; }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar container" role="navigation" aria-label="Main navigation">
+            <a href="#" class="brand" aria-label="Tourist Management Home">
+                <span class="logo">TM</span>
+                <span>Tourist Management</span>
+            </a>
+
+            <nav aria-hidden="false">
+                <a href="#features">Features</a>
+                <a href="#gallery">Destinations</a>
+                <a href="#testimonials">Stories</a>
+                <a href="/UserRegister/user">User Register</a>
+                <a href="contack">Contact</a>
+                <a href="">Login</a>
+            </nav>
+
+            <div style="display:flex;gap:8px;align-items:center">
+                <a href="#booking" class="cta-btn">Start Free</a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top:120px;">
+
+        <section class="hero" aria-label="Hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Plan, Manage and Enjoy Seamless Travel Experiences</h1>
+                    <p>Manage bookings, discover curated destinations, and provide travelers with an unforgettable journey — all from a single intuitive platform.</p>
+
+                    <div class="hero-actions">
+                        <a href="#booking" class="cta-btn">Get Started — It's Free</a>
+                        <a href="#features" class="secondary-btn">Explore Features</a>
+                    </div>
+                </div>
+
+                <div style="flex:1; min-width:260px">
+                    <div class="card" style="padding:18px;">
+                        <h3>Quick Overview</h3>
+                        <p style="color:var(--muted); margin-top:8px;">Dashboard, booking engine, itinerary builder, analytics and team management — built for travel agencies and guides.</p>
+
+                        <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+                            <div class="card" style="flex:1; min-width:120px;">
+                                <strong style="color:#fff; display:block">Bookings</strong>
+                                <span style="color:var(--muted); font-size:13px">Real-time availability & payments</span>
+                            </div>
+                            <div class="card" style="flex:1; min-width:120px;">
+                                <strong style="color:#fff; display:block">Itineraries</strong>
+                                <span style="color:var(--muted); font-size:13px">Custom day-by-day plans</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2 style="margin:12px 0 18px 0;">Core Features</h2>
+            <div class="features">
+                <div class="card">
+                    <div class="icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" fill="url(#g)"/></svg>
+                    </div>
+                    <h3>Centralized Bookings</h3>
+                    <p>Manage reservations across accommodations, tours and transport with synchronized calendars and notifications.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="url(#g)"/></svg>
+                    </div>
+                    <h3>Destination Library</h3>
+                    <p>Curated photos, descriptions and local tips for every listed destination to inspire travelers.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12H21" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Team & Permissions</h3>
+                    <p>Invite operators with role-based access, audit logs and scheduling for smooth operations.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <h2 style="margin:12px 0 18px 0;">Popular Destinations</h2>
+            <div class="gallery">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=3b2b7b6a2d2f9f3f6c7f2f1a9d1b9df8" alt="Coastal cliff with turquoise sea">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=6f4e2e6c3f2d9c3a4c7a1f7e9d1e6a5b" alt="Mountain valley at sunrise">
+                <img src="https://images.unsplash.com/photo-1519817650390-64a93db5118a?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=3e3c2b8f6d1c5c7b8a9d4f7e0b6c1d2f" alt="City skyline at dusk">
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <h2 style="margin:12px 0 18px 0;">What our partners say</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"Switched our entire booking stack to Tourist Management and reduced no-shows by 27%. The analytics are a game changer."</p>
+                    <div class="author">— Lisa M., Tours Director</div>
+                </div>
+
+                <div class="testimonial">
+                    <p>"Easy to train new guides and manage schedules. The itinerary builder saves us hours every week."</p>
+                    <div class="author">— Raj P., Operations Manager</div>
+                </div>
+
+                <div class="testimonial">
+                    <p>"Beautiful UI and stable payments integration. Our clients love the mobile confirmations."</p>
+                    <div class="author">— Sofia G., Travel Agency Owner</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-strip" id="booking" aria-label="Call to action">
+            <div>
+                <strong style="display:block; font-size:16px; color:#fff">Ready to transform your travel business?</strong>
+                <span style="color:var(--muted)">Start with a free account and scale as you grow.</span>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center">
+                <a href="#signup" class="cta-btn">Create Free Account</a>
+                <a href="#contact" class="secondary-btn">Request Demo</a>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div style="display:flex; justify-content:space-between; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+                <div style="max-width:480px;">
+                    <h3 style="margin:0 0 8px 0;">Tourist Management</h3>
+                    <p style="margin:0 0 12px 0; color:var(--muted)">Built for travel professionals — manage bookings, payments, teams and travelers from one place.</p>
+                    <p style="margin:0; color:var(--muted)">© <span id="year"></span> Tourist Management. All rights reserved.</p>
+                </div>
+
+                <div style="display:flex; gap:30px; align-items:center;">
+                    <div>
+                        <strong style="display:block; color:#fff;">Contact</strong>
+                        <a href="mailto:hello@tourist.example" style="color:var(--muted); text-decoration:none;">hello@tourist.example</a>
+                    </div>
+                    <div>
+                        <strong style="display:block; color:#fff;">Follow</strong>
+                        <div style="display:flex; gap:8px; margin-top:6px;">
+                            <a href="#" style="color:var(--muted); text-decoration:none;">Twitter</a>
+                            <a href="#" style="color:var(--muted); text-decoration:none;">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Mobile nav toggle
+        (function(){
+            var btn = document.getElementById('mobileToggle');
+            var nav = document.querySelector('nav');
+            btn && btn.addEventListener('click', function(){
+                if (!nav) return;
+                if (nav.style.display === 'flex') {
+                    nav.style.display = 'none';
+                    btn.textContent = '☰';
+                } else {
+                    nav.style.display = 'flex';
+                    nav.style.flexDirection = 'column';
+                    nav.style.position = 'absolute';
+                    nav.style.top = '68px';
+                    nav.style.right = '18px';
+                    nav.style.background = 'rgba(7,12,24,0.9)';
+                    nav.style.padding = '12px';
+                    nav.style.borderRadius = '10px';
+                    btn.textContent = '✕';
+                }
+            });
+
+            // set year
+            var y = new Date().getFullYear();
+            var el = document.getElementById('year');
+            if (el) el.textContent = y;
+        })();
+    </script>
+</body>
+</html>
